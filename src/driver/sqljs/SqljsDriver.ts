@@ -101,12 +101,17 @@ export class SqljsDriver extends AbstractSqliteDriver {
                     return this.createDatabaseConnectionWithImport()
                 }
             } else {
+                const localForage = this.options.localForage || this.options.useLocalForage ? window.localforage : undefined
                 // browser
                 // fileNameOrLocalStorageOrData should be a local storage / indexedDB key
                 let localStorageContent = null
-                if (this.options.useLocalForage) {
-                    if (window.localforage) {
-                        localStorageContent = await window.localforage.getItem(
+                if (localForage) {
+                    localStorageContent = await this.options.localForage.getItem(
+                        fileNameOrLocalStorageOrData,
+                    )
+                } else if (this.options.useLocalForage) {
+                    if (localForage) {
+                        localStorageContent = await localForage.getItem(
                             fileNameOrLocalStorageOrData,
                         )
                     } else {

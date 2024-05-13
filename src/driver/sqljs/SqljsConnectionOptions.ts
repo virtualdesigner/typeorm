@@ -51,5 +51,10 @@ export interface SqljsConnectionOptions extends BaseDataSourceOptions {
      */
     readonly useLocalForage?: boolean
 
+    /**
+     * Allow us to pass in a localforage instance rather than it being a property of window.
+     */
+    readonly localForage?: any
+
     readonly poolSize?: never
 }
